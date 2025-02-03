@@ -59,7 +59,7 @@
     "style-loader": "^4.0.0",
     "tailwindcss": "^3.4.17"
   },
-  "homepage": "https://data-pribadi.github.io/app-dashboard/",
+  "homepage": "https://data-pribadi.github.io/dashboard/",
   "eslintConfig": {
     "extends": [
       "react-app",
