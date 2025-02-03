@@ -45,7 +45,7 @@
     "@babel/plugin-proposal-private-property-in-object": "^7.18.6",
     "tailwindcss": "^2.2.19"
   },
-  "homepage": "https://data-pribadi.github.io/app",
+  "homepage": "https://data-pribadi.github.io/appdashboard",
   "eslintConfig": {
     "extends": [
       "react-app",
