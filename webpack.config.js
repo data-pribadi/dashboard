@@ -10,10 +10,12 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
     fallback: {
-      "child_process": false, // Menambahkan fallback untuk child_process
-      "fs": false, // Jika Anda juga menggunakan modul fs
-      "util": require.resolve("util/"), // Tambahkan ini untuk mendukung modul 'util'
-      "path": require.resolve("path-browserify"), // Tambahkan fallback untuk path
+      "child_process": false,
+      "fs": false,
+      "util": require.resolve("util/"),
+      "path": require.resolve("path-browserify"),
+      "os": require.resolve("os-browserify/browser"),
+      "crypto": require.resolve("crypto-browserify"),
     },
   },
   plugins: [

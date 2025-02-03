@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import '../index.css'; // Pastikan Tailwind CSS terimpor
 import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
+require('dotenv').config(); // Memuat variabel lingkungan dari file .env
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -14,7 +15,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchVouchersData = async () => {
       const sheetId = process.env.REACT_APP_SHEET_ID;
-      const range = 'Data_Vouchers!A2:H';
+      const range = process.env.REACT_APP_VOUCHERS_RANGE;
       const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
       const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}?key=${apiKey}`;
 
@@ -33,7 +34,7 @@ const Dashboard = () => {
 
     const fetchLaporanData = async () => {
       const sheetId = process.env.REACT_APP_SHEET_ID;
-      const range = 'Data_Laporan!A2:H';
+      const range = process.env.REACT_APP_LAPORAN_RANGE;
       const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
       const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}?key=${apiKey}`;
 
