@@ -13,10 +13,14 @@
     "@testing-library/user-event": "^13.2.1",
     "ajv": "^8.17.1",
     "ajv-keywords": "^5.1.0",
+    "animate.css": "^4.1.1",
+    "axios": "^1.7.9",
     "babel-loader": "^9.2.1",
     "chart.js": "^4.4.7",
+    "cors": "^2.8.5",
     "cra-template": "1.2.0",
     "crypto-browserify": "^3.12.1",
+    "dotenv": "^16.4.7",
     "gh-pages": "^6.3.0",
     "googleapis": "^144.0.0",
     "node-polyfill-webpack-plugin": "^4.1.0",
@@ -40,7 +44,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "start-server": "node src/api/login.js"
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.18.6",
