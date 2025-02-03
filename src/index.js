@@ -1,19 +1,12 @@
 // index.js
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css'; // Pastikan Tailwind CSS dan Flowbite diimpor
+import ReactDOM from 'react-dom';
 import App from './App';
-import { BrowserRouter } from 'react-router-dom';
-import reportWebVitals from './reportWebVitals';
+import './index.css';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
+ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById('root')
 );
-
-// Laporan vitalitas web untuk pengukuran kinerja aplikasi Anda
-reportWebVitals();
