@@ -22,6 +22,10 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# Mengabaikan file indexBackup.html di folder public
+/public/indexBackup.html
+
+
 # Ignoring credentials and environment variables
 credentials.json
 .env
