@@ -1,4 +1,5 @@
 const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
 
 module.exports = {
@@ -20,6 +21,9 @@ module.exports = {
   },
   plugins: [
     new NodePolyfillPlugin(),
+    new HtmlWebpackPlugin({
+      template: './public/index.html',
+    }),
   ],
   module: {
     rules: [
@@ -29,6 +33,10 @@ module.exports = {
         use: {
           loader: 'babel-loader',
         },
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader', 'postcss-loader'],
       },
     ],
   },

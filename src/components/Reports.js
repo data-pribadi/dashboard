@@ -12,7 +12,7 @@ const Reports = () => {
   useEffect(() => {
     const fetchData = async () => {
       const sheetId = process.env.REACT_APP_SHEET_ID;
-      const range = 'Data_Laporan!A2:H';
+      const range = process.env.REACT_APP_LAPORAN_RANGE;
       const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
       const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}?key=${apiKey}`;
 

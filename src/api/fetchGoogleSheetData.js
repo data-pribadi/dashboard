@@ -1,6 +1,8 @@
 // src/api/fetchGoogleSheetData.js
 import { google } from 'googleapis';
-require('dotenv').config(); // Memuat variabel lingkungan dari file .env
+import dotenv from 'dotenv';
+
+dotenv.config(); // Memuat variabel lingkungan dari file .env
 
 const sheets = google.sheets('v4');
 
