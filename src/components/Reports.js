@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import ReactPaginate from 'react-paginate';
-import '../index.css'; // Pastikan Tailwind CSS terimpor
+import React, { useState, useEffect } from "react";
+import ReactPaginate from "react-paginate";
+import "../index.css"; // Pastikan Tailwind CSS terimpor
 
 const Reports = () => {
   const [data, setData] = useState([]);
@@ -16,20 +16,20 @@ const Reports = () => {
       const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
       const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}?key=${apiKey}`;
 
-      console.log('Fetching data from URL:', url); // Log URL untuk verifikasi
+      console.log("Fetching data from URL:", url); // Log URL untuk verifikasi
 
       try {
         const response = await fetch(url);
         const result = await response.json();
-        console.log('Google Sheets API response:', result); // Log respon untuk debug
+        console.log("Google Sheets API response:", result); // Log respon untuk debug
         if (result.values) {
           setData(result.values);
         } else {
-          setError('No data found');
+          setError("No data found");
         }
       } catch (error) {
-        setError('Error fetching data from Google Sheets');
-        console.error('Error fetching data from Google Sheets', error);
+        setError("Error fetching data from Google Sheets");
+        console.error("Error fetching data from Google Sheets", error);
       } finally {
         setLoading(false);
       }
@@ -75,7 +75,9 @@ const Reports = () => {
             {currentPageData.map((row, index) => (
               <tr key={index} className="bg-white">
                 {row.map((cell, cellIndex) => (
-                  <td key={cellIndex} className="py-2 px-4 border">{cell}</td>
+                  <td key={cellIndex} className="py-2 px-4 border">
+                    {cell}
+                  </td>
                 ))}
               </tr>
             ))}

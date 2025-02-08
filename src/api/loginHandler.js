@@ -1,14 +1,14 @@
-require('dotenv').config();
-const { google } = require('googleapis');
-const credentials = require('../../credentials.json');
+require("dotenv").config();
+const { google } = require("googleapis");
+const credentials = require("../../credentials.json");
 
-const SCOPES = ['https://www.googleapis.com/auth/spreadsheets'];
+const SCOPES = ["https://www.googleapis.com/auth/spreadsheets"];
 const auth = new google.auth.GoogleAuth({
   credentials,
   scopes: SCOPES,
 });
 
-const sheets = google.sheets({ version: 'v4', auth });
+const sheets = google.sheets({ version: "v4", auth });
 
 const verifyUser = async (identifier, password) => {
   const spreadsheetId = process.env.REACT_APP_SHEET_ID;
@@ -23,7 +23,10 @@ const verifyUser = async (identifier, password) => {
   if (rows.length) {
     for (const row of rows) {
       // Periksa login menggunakan username (kolom A) atau email (kolom C)
-      if ((row[0] === identifier || row[2] === identifier) && row[3] === password) {
+      if (
+        (row[0] === identifier || row[2] === identifier) &&
+        row[3] === password
+      ) {
         return true;
       }
     }

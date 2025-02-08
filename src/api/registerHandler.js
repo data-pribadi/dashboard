@@ -1,14 +1,14 @@
-require('dotenv').config();
-const { google } = require('googleapis');
-const credentials = require('../../credentials.json');
+require("dotenv").config();
+const { google } = require("googleapis");
+const credentials = require("../../credentials.json");
 
-const SCOPES = ['https://www.googleapis.com/auth/spreadsheets'];
+const SCOPES = ["https://www.googleapis.com/auth/spreadsheets"];
 const auth = new google.auth.GoogleAuth({
   credentials,
   scopes: SCOPES,
 });
 
-const sheets = google.sheets({ version: 'v4', auth });
+const sheets = google.sheets({ version: "v4", auth });
 
 const checkUsernameAvailability = async (username) => {
   const spreadsheetId = process.env.REACT_APP_SHEET_ID;
@@ -30,7 +30,7 @@ const checkUsernameAvailability = async (username) => {
     }
     return true; // Username is available
   } catch (error) {
-    console.error('Error checking username availability:', error.message);
+    console.error("Error checking username availability:", error.message);
     throw error;
   }
 };
@@ -40,23 +40,23 @@ const registerUser = async (username, fullname, email, password) => {
   const range = process.env.REACT_APP_USER_LOGIN_RANGE;
 
   try {
-    console.log('Starting registration process for:', email);
+    console.log("Starting registration process for:", email);
     const isAvailable = await checkUsernameAvailability(username);
     if (!isAvailable) {
-      throw new Error('Username is already taken');
+      throw new Error("Username is already taken");
     }
 
     await sheets.spreadsheets.values.append({
       spreadsheetId,
       range,
-      valueInputOption: 'USER_ENTERED',
+      valueInputOption: "USER_ENTERED",
       resource: {
         values: [[username, fullname, email, password]],
       },
     });
-    console.log('Registration successful for:', email);
+    console.log("Registration successful for:", email);
   } catch (error) {
-    console.error('Error during registration:', error.message);
+    console.error("Error during registration:", error.message);
     throw error;
   }
 };

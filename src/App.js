@@ -1,15 +1,20 @@
-import React, { useContext } from 'react';
-import { HashRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import Dashboard from './components/Dashboard';
-import DataTable from './components/DataTable';
-import Reports from './components/Reports';
-import Navbar from './components/Navbar';
-import Sidebar from './components/Sidebar';
-import NewPage from './components/NewPage';
-import Login from './auth/Login';
-import Register from './auth/Register';
-import { AuthContext, AuthProvider } from './context/AuthContext';
-import './index.css';
+import React, { useContext } from "react";
+import {
+  HashRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
+import Dashboard from "./components/Dashboard";
+import DataTable from "./components/DataTable";
+import Reports from "./components/Reports";
+import Navbar from "./components/Navbar";
+import Sidebar from "./components/Sidebar";
+import NewPage from "./components/NewPage";
+import Login from "./auth/Login";
+import Register from "./auth/Register";
+import { AuthContext, AuthProvider } from "./context/AuthContext";
+import "./index.css";
 
 const PrivateRoute = ({ children }) => {
   const { isAuthenticated } = useContext(AuthContext);
@@ -28,11 +33,42 @@ const AppContent = () => {
             <Navbar />
             <div className="mt-16 p-4">
               <Routes>
-                <Route path="/" element={<Navigate to="/dashboard" replace />} />
-                <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
-                <Route path="/datatable" element={<PrivateRoute><DataTable /></PrivateRoute>} />
-                <Route path="/reports" element={<PrivateRoute><Reports /></PrivateRoute>} />
-                <Route path="/newpage" element={<PrivateRoute><NewPage /></PrivateRoute>} />
+                <Route
+                  path="/"
+                  element={<Navigate to="/dashboard" replace />}
+                />
+                <Route
+                  path="/dashboard"
+                  element={
+                    <PrivateRoute>
+                      <Dashboard />
+                    </PrivateRoute>
+                  }
+                />
+                <Route
+                  path="/datatable"
+                  element={
+                    <PrivateRoute>
+                      <DataTable />
+                    </PrivateRoute>
+                  }
+                />
+                <Route
+                  path="/reports"
+                  element={
+                    <PrivateRoute>
+                      <Reports />
+                    </PrivateRoute>
+                  }
+                />
+                <Route
+                  path="/newpage"
+                  element={
+                    <PrivateRoute>
+                      <NewPage />
+                    </PrivateRoute>
+                  }
+                />
               </Routes>
             </div>
           </div>
@@ -40,7 +76,8 @@ const AppContent = () => {
       ) : (
         <Routes>
           <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} /> {/* Tambahkan rute registrasi */}
+          <Route path="/register" element={<Register />} />{" "}
+          {/* Tambahkan rute registrasi */}
           <Route path="*" element={<Navigate to="/login" />} />
         </Routes>
       )}

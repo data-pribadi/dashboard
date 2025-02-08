@@ -1,8 +1,13 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTachometerAlt, faTable, faChartBar, faPlus } from '@fortawesome/free-solid-svg-icons';
-import '../index.css'; // Pastikan Tailwind CSS terimpor
+import React from "react";
+import { NavLink } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faTachometerAlt,
+  faTable,
+  faChartBar,
+  faPlus,
+} from "@fortawesome/free-solid-svg-icons";
+import "../index.css"; // Pastikan Tailwind CSS terimpor
 
 const Sidebar = () => {
   return (

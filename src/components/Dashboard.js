@@ -1,9 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import '../index.css'; // Pastikan Tailwind CSS terimpor
-import { Bar } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
+import React, { useState, useEffect } from "react";
+import "../index.css"; // Pastikan Tailwind CSS terimpor
+import { Bar } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 const Dashboard = () => {
   const [vouchersData, setVouchersData] = useState([]);
@@ -23,10 +38,10 @@ const Dashboard = () => {
         if (result.values) {
           setVouchersData(result.values);
         } else {
-          setError('No data found in Data_Vouchers');
+          setError("No data found in Data_Vouchers");
         }
       } catch (error) {
-        setError('Error fetching data from Data_Vouchers');
+        setError("Error fetching data from Data_Vouchers");
       }
     };
 
@@ -42,10 +57,10 @@ const Dashboard = () => {
         if (result.values) {
           setLaporanData(result.values);
         } else {
-          setError('No data found in Data_Laporan');
+          setError("No data found in Data_Laporan");
         }
       } catch (error) {
-        setError('Error fetching data from Data_Laporan');
+        setError("Error fetching data from Data_Laporan");
       }
     };
 
@@ -69,18 +84,20 @@ const Dashboard = () => {
   }
 
   const totalSellers = vouchersData.length;
-  const activeUsers = vouchersData.filter(row => row[6] === 'Yes').length;
-  const totalSales = vouchersData.reduce((sum, row) => sum + parseFloat(row[3] || 0), 0).toFixed(2);
+  const activeUsers = vouchersData.filter((row) => row[6] === "Yes").length;
+  const totalSales = vouchersData
+    .reduce((sum, row) => sum + parseFloat(row[3] || 0), 0)
+    .toFixed(2);
   const statusCount = laporanData.length;
 
   const data = {
-    labels: ['Penjual', 'User Aktif', 'Status', 'Penjualan'],
+    labels: ["Penjual", "User Aktif", "Status", "Penjualan"],
     datasets: [
       {
-        label: 'Jumlah',
+        label: "Jumlah",
         data: [totalSellers, activeUsers, statusCount, totalSales],
-        backgroundColor: ['#1E3A8A', '#10B981', '#F59E0B', '#EF4444'],
-        borderColor: ['#1E40AF', '#059669', '#D97706', '#DC2626'],
+        backgroundColor: ["#1E3A8A", "#10B981", "#F59E0B", "#EF4444"],
+        borderColor: ["#1E40AF", "#059669", "#D97706", "#DC2626"],
         borderWidth: 1,
       },
     ],
@@ -94,19 +111,19 @@ const Dashboard = () => {
       },
       title: {
         display: true,
-        text: 'Dashboard Data Chart',
+        text: "Dashboard Data Chart",
       },
     },
   };
 
   const data2 = {
-    labels: ['Januari', 'Februari', 'Maret', 'April'],
+    labels: ["Januari", "Februari", "Maret", "April"],
     datasets: [
       {
-        label: 'Penjualan Bulanan',
+        label: "Penjualan Bulanan",
         data: [3000, 4000, 3500, 5000],
-        backgroundColor: ['#3B82F6', '#10B981', '#F59E0B', '#EF4444'],
-        borderColor: ['#2563EB', '#059669', '#D97706', '#DC2626'],
+        backgroundColor: ["#3B82F6", "#10B981", "#F59E0B", "#EF4444"],
+        borderColor: ["#2563EB", "#059669", "#D97706", "#DC2626"],
         borderWidth: 1,
       },
     ],
@@ -120,7 +137,7 @@ const Dashboard = () => {
       },
       title: {
         display: true,
-        text: 'Penjualan Bulanan Chart',
+        text: "Penjualan Bulanan Chart",
       },
     },
   };

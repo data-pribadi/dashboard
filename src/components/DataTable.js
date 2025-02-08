@@ -1,14 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import ReactPaginate from 'react-paginate';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faEye, faShoppingCart, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
-import '../index.css'; // Pastikan Tailwind CSS terimpor
+import React, { useState, useEffect } from "react";
+import ReactPaginate from "react-paginate";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faEdit,
+  faEye,
+  faShoppingCart,
+  faTrashAlt,
+} from "@fortawesome/free-solid-svg-icons";
+import "../index.css"; // Pastikan Tailwind CSS terimpor
 
 const DataTable = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = rowsPerPage;
@@ -20,20 +25,20 @@ const DataTable = () => {
       const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
       const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}?key=${apiKey}`;
 
-      console.log('Fetching data from URL:', url); // Log URL untuk verifikasi
+      console.log("Fetching data from URL:", url); // Log URL untuk verifikasi
 
       try {
         const response = await fetch(url);
         const result = await response.json();
-        console.log('Google Sheets API response:', result); // Log respon untuk debug
+        console.log("Google Sheets API response:", result); // Log respon untuk debug
         if (result.values) {
           setData(result.values);
         } else {
-          setError('No data found');
+          setError("No data found");
         }
       } catch (error) {
-        setError('Error fetching data from Google Sheets');
-        console.error('Error fetching data from Google Sheets', error);
+        setError("Error fetching data from Google Sheets");
+        console.error("Error fetching data from Google Sheets", error);
       } finally {
         setLoading(false);
       }
@@ -53,7 +58,9 @@ const DataTable = () => {
   };
 
   const filteredData = data.filter((row) =>
-    row.some((cell) => cell.toString().toLowerCase().includes(search.toLowerCase()))
+    row.some((cell) =>
+      cell.toString().toLowerCase().includes(search.toLowerCase())
+    )
   );
 
   const pageCount = Math.ceil(filteredData.length / itemsPerPage);
@@ -77,7 +84,11 @@ const DataTable = () => {
       <h1 className="text-2xl font-bold mb-4">Data Table</h1>
       <div className="flex justify-between mb-4">
         <div>
-          <select value={rowsPerPage} onChange={handleRowsPerPageChange} className="mr-2 p-2 border rounded">
+          <select
+            value={rowsPerPage}
+            onChange={handleRowsPerPageChange}
+            className="mr-2 p-2 border rounded"
+          >
             <option value={10}>10</option>
             <option value={30}>30</option>
             <option value={50}>50</option>
@@ -104,14 +115,17 @@ const DataTable = () => {
               <th className="py-2 px-4 border">WAKTU</th>
               <th className="py-2 px-4 border">USER_AKTIF</th>
               <th className="py-2 px-4 border">STATUS</th>
-              <th className="py-2 px-4 border">ACTIONS</th> {/* Tambahkan kolom untuk actions */}
+              <th className="py-2 px-4 border">ACTIONS</th>{" "}
+              {/* Tambahkan kolom untuk actions */}
             </tr>
           </thead>
           <tbody className="divide-y">
             {currentPageData.map((row, index) => (
               <tr key={index} className="bg-white">
                 {row.map((cell, cellIndex) => (
-                  <td key={cellIndex} className="py-2 px-4 border">{cell}</td>
+                  <td key={cellIndex} className="py-2 px-4 border">
+                    {cell}
+                  </td>
                 ))}
                 <td className="py-2 px-4 border">
                   <div className="flex space-x-2">
