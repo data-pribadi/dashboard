@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ReactPaginate from 'react-paginate';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
 import {
   faEdit,
   faEye,
@@ -124,8 +123,7 @@ const DataTable = () => {
               <th className="py-2 px-4 border">WAKTU</th>
               <th className="py-2 px-4 border">USER_AKTIF</th>
               <th className="py-2 px-4 border">STATUS</th>
-              <th className="py-2 px-4 border">ACTIONS</th>{' '}
-              {/* Tambahkan kolom untuk actions */}
+              <th className="py-2 px-4 border">ACTIONS</th>
             </tr>
           </thead>
           <tbody className="divide-y">

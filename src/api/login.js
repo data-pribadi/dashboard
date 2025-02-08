@@ -3,6 +3,7 @@ const cors = require("cors");
 const path = require("path");
 const { verifyUser } = require("./loginHandler"); // Impor fungsi verifyUser
 const { registerUser } = require("./registerHandler"); // Impor fungsi registerUser
+const updateSheetRouter = require("./updateSheetHandler"); // Impor fungsi updateSheetHandler
 
 const app = express();
 app.use(express.json());
@@ -40,21 +41,22 @@ app.post("/api/register", async (req, res) => {
     await registerUser(username, fullname, email, password);
     res.json({ success: true });
   } catch (error) {
-    console.error("Error registering user:", error.message); // Tambahkan logging error
+    console.error("Error registering user:", error.message);
     if (error.message === "Username is already taken") {
       res
         .status(400)
         .json({ success: false, error: "Username is already taken" });
     } else {
-      res
-        .status(500)
-        .json({
-          success: false,
-          error: "An error occurred during registration",
-        });
+      res.status(500).json({
+        success: false,
+        error: "An error occurred during registration",
+      });
     }
   }
 });
+
+// Tambahkan rute untuk update sheet
+app.use("/api", updateSheetRouter);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
