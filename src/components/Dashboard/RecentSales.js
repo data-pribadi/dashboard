@@ -16,7 +16,10 @@ const RecentSales = ({ recentSale }) => {
           <span>{recentSale[4]}</span>
           <span>{recentSale[5]}</span>
           <span>
-            <FontAwesomeIcon icon={faCheckCircle} className="text-green-500 mr-2" />
+            <FontAwesomeIcon
+              icon={faCheckCircle}
+              className="text-green-500 mr-2"
+            />
             {recentSale[7]}
           </span>
         </div>

@@ -1,9 +1,11 @@
-import React, { useState } from "react";
-import axios from "axios";
-import "animate.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faShoppingCart, faSpinner } from "@fortawesome/free-solid-svg-icons";
-import SuccessModal from "./SuccessModal";
+import React, { useState } from 'react';
+import axios from 'axios';
+import 'animate.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faShoppingCart, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import SuccessModal from './SuccessModal';
+
+// ... kode lainnya
 
 const PurchaseModal = ({ isOpen, toggle, item, onPurchase, onSuccess }) => {
   const [successModalOpen, setSuccessModalOpen] = useState(false);
@@ -23,7 +25,7 @@ const PurchaseModal = ({ isOpen, toggle, item, onPurchase, onSuccess }) => {
       };
 
       const response = await axios.post(
-        "http://localhost:5000/api/update-sheet",
+        'http://localhost:5000/api/update-sheet',
         { item: itemData }
       );
       if (response.data.success) {
@@ -31,12 +33,12 @@ const PurchaseModal = ({ isOpen, toggle, item, onPurchase, onSuccess }) => {
         setSuccessModalOpen(true);
         onSuccess();
       } else {
-        console.error("Error updating Google Sheet");
-        setError("Error updating Google Sheet");
+        console.error('Error updating Google Sheet');
+        setError('Error updating Google Sheet');
       }
     } catch (error) {
-      console.error("Error during purchase:", error);
-      setError("Error during purchase");
+      console.error('Error during purchase:', error);
+      setError('Error during purchase');
     }
     setIsLoading(false);
     toggle();
@@ -51,7 +53,7 @@ const PurchaseModal = ({ isOpen, toggle, item, onPurchase, onSuccess }) => {
     <>
       <div
         className={`${
-          isOpen ? "block" : "hidden"
+          isOpen ? 'block' : 'hidden'
         } fixed z-10 inset-0 overflow-y-auto`}
       >
         <div className="flex items-center justify-center min-h-screen px-4 text-center sm:block sm:p-0">
@@ -87,7 +89,7 @@ const PurchaseModal = ({ isOpen, toggle, item, onPurchase, onSuccess }) => {
                           type="text"
                           id="itemId"
                           className="mt-1 block w-2/3 border border-gray-300 rounded-md shadow-sm p-2"
-                          value={item?.[0]}
+                          value={item?.[0] || ''}
                           readOnly
                         />
                       </div>
@@ -102,7 +104,7 @@ const PurchaseModal = ({ isOpen, toggle, item, onPurchase, onSuccess }) => {
                           type="text"
                           id="itemName"
                           className="mt-1 block w-2/3 border border-gray-300 rounded-md shadow-sm p-2"
-                          value={item?.[1]}
+                          value={item?.[1] || ''}
                           readOnly
                         />
                       </div>
@@ -117,7 +119,7 @@ const PurchaseModal = ({ isOpen, toggle, item, onPurchase, onSuccess }) => {
                           type="text"
                           id="itemPassword"
                           className="mt-1 block w-2/3 border border-gray-300 rounded-md shadow-sm p-2"
-                          value={item?.[2]}
+                          value={item?.[2] || ''}
                           readOnly
                         />
                       </div>
@@ -132,7 +134,7 @@ const PurchaseModal = ({ isOpen, toggle, item, onPurchase, onSuccess }) => {
                           type="text"
                           id="itemPrice"
                           className="mt-1 block w-2/3 border border-gray-300 rounded-md shadow-sm p-2"
-                          value={item?.[3]}
+                          value={item?.[3] || ''}
                           readOnly
                         />
                       </div>

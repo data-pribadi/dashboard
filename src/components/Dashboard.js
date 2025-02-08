@@ -161,11 +161,27 @@ const Dashboard = () => {
       {error && <div className="text-center text-red-600 py-4">{error}</div>}
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
-        <DashboardCard bgColor="bg-blue-500" title="Total Sellers Stock" value={totalSellers} />
-        <DashboardCard bgColor="bg-green-500" title="User Aktif" value={activeUsers} />
+        <DashboardCard
+          bgColor="bg-blue-500"
+          title="Total Sellers Stock"
+          value={totalSellers}
+        />
+        <DashboardCard
+          bgColor="bg-green-500"
+          title="User Aktif"
+          value={activeUsers}
+        />
         <DashboardCard bgColor="bg-yellow-500" title="Status" value={statusCount} />
-        <DashboardCard bgColor="bg-red-500" title="Hasil Penjualan" value={totalSales} />
-        <DashboardCard bgColor="bg-gray-500" title="Sisa Stock" value={totalSellers} />
+        <DashboardCard
+          bgColor="bg-red-500"
+          title="Hasil Penjualan"
+          value={totalSales}
+        />
+        <DashboardCard
+          bgColor="bg-gray-500"
+          title="Sisa Stock"
+          value={totalSellers}
+        />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
