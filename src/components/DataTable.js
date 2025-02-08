@@ -7,6 +7,7 @@ import {
   faShoppingCart,
   faTrashAlt,
 } from '@fortawesome/free-solid-svg-icons';
+import PurchaseModal from './PurchaseModal';
 import '../index.css'; // Pastikan Tailwind CSS terimpor
 
 const DataTable = () => {
@@ -17,6 +18,8 @@ const DataTable = () => {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = rowsPerPage;
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -46,6 +49,11 @@ const DataTable = () => {
 
     fetchData();
   }, []);
+
+  const toggleModal = (item) => {
+    setSelectedItem(item);
+    setIsModalOpen(!isModalOpen);
+  };
 
   const handleSearchChange = (event) => {
     setSearch(event.target.value);
@@ -135,7 +143,10 @@ const DataTable = () => {
                     <button className="p-2 bg-green-500 text-white rounded">
                       <FontAwesomeIcon icon={faEye} />
                     </button>
-                    <button className="p-2 bg-yellow-500 text-white rounded">
+                    <button
+                      className="p-2 bg-yellow-500 text-white rounded"
+                      onClick={() => toggleModal(row)} // Panggil toggleModal ketika tombol diklik
+                    >
                       <FontAwesomeIcon icon={faShoppingCart} />
                     </button>
                     <button className="p-2 bg-red-500 text-white rounded">
@@ -164,6 +175,13 @@ const DataTable = () => {
           nextLinkClassName={'page-link p-2 border rounded'}
         />
       </div>
+      <PurchaseModal
+        isOpen={isModalOpen}
+        toggle={() => toggleModal(null)}
+        item={selectedItem}
+        onPurchase={() => console.log('Purchase confirmed')}
+        onSuccess={() => console.log('Purchase successful')}
+      />
     </div>
   );
 };
