@@ -1,71 +1,82 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faTachometerAlt,
+  faChartPie,
   faTable,
-  faChartBar,
-  faPlus,
-} from "@fortawesome/free-solid-svg-icons";
-import "../index.css"; // Pastikan Tailwind CSS terimpor
+  faFileAlt,
+  faUser,
+  faCog,
+} from '@fortawesome/free-solid-svg-icons';
+import '../index.css';
 
 const Sidebar = () => {
   return (
-    <div className="w-64 bg-gray-800 text-white min-h-screen fixed top-0 left-0 pt-16">
-      <ul className="space-y-4 p-4">
-        <li>
-          <NavLink
-            to="/dashboard"
-            className={({ isActive }) =>
-              isActive
-                ? "flex items-center p-2 rounded bg-gray-700"
-                : "flex items-center p-2 rounded hover:bg-gray-700"
-            }
-          >
-            <FontAwesomeIcon icon={faTachometerAlt} className="mr-2" />
-            Dashboard
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to="/datatable"
-            className={({ isActive }) =>
-              isActive
-                ? "flex items-center p-2 rounded bg-gray-700"
-                : "flex items-center p-2 rounded hover:bg-gray-700"
-            }
-          >
-            <FontAwesomeIcon icon={faTable} className="mr-2" />
-            Data Table
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to="/reports"
-            className={({ isActive }) =>
-              isActive
-                ? "flex items-center p-2 rounded bg-gray-700"
-                : "flex items-center p-2 rounded hover:bg-gray-700"
-            }
-          >
-            <FontAwesomeIcon icon={faChartBar} className="mr-2" />
-            Reports
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to="/newpage"
-            className={({ isActive }) =>
-              isActive
-                ? "flex items-center p-2 rounded bg-gray-700"
-                : "flex items-center p-2 rounded hover:bg-gray-700"
-            }
-          >
-            <FontAwesomeIcon icon={faPlus} className="mr-2" />
-            New Page
-          </NavLink>
-        </li>
-      </ul>
+    <div className="fixed inset-y-0 left-0 bg-gray-800 w-64 overflow-y-auto">
+      <div className="py-4">
+        <div className="text-white text-xl font-semibold px-4">
+          Admin Dashboard
+        </div>
+        <nav className="mt-5">
+          <ul>
+            <li>
+              <Link
+                to="/dashboard"
+                className="flex items-center p-2 rounded bg-gray-700"
+              >
+                <FontAwesomeIcon icon={faTachometerAlt} className="mr-3" />
+                Dashboard
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/datatable"
+                className="flex items-center p-2 rounded hover:bg-gray-700"
+              >
+                <FontAwesomeIcon icon={faTable} className="mr-3" />
+                Data Table
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/reports"
+                className="flex items-center p-2 rounded bg-gray-700"
+              >
+                <FontAwesomeIcon icon={faChartPie} className="mr-3" />
+                Reports
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/newpage"
+                className="flex items-center p-2 rounded hover:bg-gray-700"
+              >
+                <FontAwesomeIcon icon={faFileAlt} className="mr-3" />
+                New Page
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/profile"
+                className="flex items-center p-2 rounded bg-gray-700"
+              >
+                <FontAwesomeIcon icon={faUser} className="mr-3" />
+                Profile
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/settings"
+                className="flex items-center p-2 rounded hover:bg-gray-700"
+              >
+                <FontAwesomeIcon icon={faCog} className="mr-3" />
+                Settings
+              </Link>
+            </li>
+          </ul>
+        </nav>
+      </div>
     </div>
   );
 };
