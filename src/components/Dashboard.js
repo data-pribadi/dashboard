@@ -77,7 +77,10 @@ const Dashboard = () => {
     }, 0);
 
   const currencyFormat = (value) =>
-    new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(value);
+    new Intl.NumberFormat('id-ID', {
+      style: 'currency',
+      currency: 'IDR',
+    }).format(value);
 
   const penjualanPerUser = dataLaporan.reduce((acc, row) => {
     const penjual = row[1];
@@ -139,10 +142,30 @@ const Dashboard = () => {
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <DashboardCard title="Total Vouchers" value={totalVouchers} icon="📦" bgColor="bg-blue-500" />
-        <DashboardCard title="Total Amount" value={currencyFormat(totalAmount)} icon="💰" bgColor="bg-green-500" />
-        <DashboardCard title="Aktif Vouchers" value="Aktif" icon="✅" bgColor="bg-yellow-500" />
-        <DashboardCard title="Penjualan Bulanan" value="Rp 0" icon="📊" bgColor="bg-red-500" />
+        <DashboardCard
+          title="Total Vouchers"
+          value={totalVouchers}
+          icon="📦"
+          bgColor="bg-blue-500"
+        />
+        <DashboardCard
+          title="Total Amount"
+          value={currencyFormat(totalAmount)}
+          icon="💰"
+          bgColor="bg-green-500"
+        />
+        <DashboardCard
+          title="Aktif Vouchers"
+          value="Aktif"
+          icon="✅"
+          bgColor="bg-yellow-500"
+        />
+        <DashboardCard
+          title="Penjualan Bulanan"
+          value="Rp 0"
+          icon="📊"
+          bgColor="bg-red-500"
+        />
       </div>
       <div className="mt-8">
         <h2 className="text-xl font-bold mb-4">Dashboard Data Chart</h2>
