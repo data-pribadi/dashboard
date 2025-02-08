@@ -1,35 +1,37 @@
-import React, { useState, useEffect } from "react";
-import ReactPaginate from "react-paginate";
-import "../index.css"; // Pastikan Tailwind CSS terimpor
+import React, { useState, useEffect } from 'react';
+import ReactPaginate from 'react-paginate';
+import '../index.css';
 
 const Reports = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [search, setSearch] = useState('');
+  const [rowsPerPage, setRowsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 10;
+  const itemsPerPage = rowsPerPage;
 
   useEffect(() => {
     const fetchData = async () => {
       const sheetId = process.env.REACT_APP_SHEET_ID;
-      const range = process.env.REACT_APP_LAPORAN_RANGE;
+      const range = process.env.REACT_APP_REPORTS_RANGE;
       const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
       const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}?key=${apiKey}`;
 
-      console.log("Fetching data from URL:", url); // Log URL untuk verifikasi
+      console.log('Fetching data from URL:', url);
 
       try {
         const response = await fetch(url);
         const result = await response.json();
-        console.log("Google Sheets API response:", result); // Log respon untuk debug
+        console.log('Google Sheets API response:', result);
         if (result.values) {
           setData(result.values);
         } else {
-          setError("No data found");
+          setError('No data found');
         }
       } catch (error) {
-        setError("Error fetching data from Google Sheets");
-        console.error("Error fetching data from Google Sheets", error);
+        setError('Error fetching data from Google Sheets');
+        console.error('Error fetching data from Google Sheets', error);
       } finally {
         setLoading(false);
       }
@@ -38,9 +40,25 @@ const Reports = () => {
     fetchData();
   }, []);
 
-  const pageCount = Math.ceil(data.length / itemsPerPage);
+  const handleSearchChange = (event) => {
+    setSearch(event.target.value);
+    setCurrentPage(0);
+  };
+
+  const handleRowsPerPageChange = (event) => {
+    setRowsPerPage(parseInt(event.target.value));
+    setCurrentPage(0);
+  };
+
+  const filteredData = data.filter((row) =>
+    row.some((cell) =>
+      cell.toString().toLowerCase().includes(search.toLowerCase())
+    )
+  );
+
+  const pageCount = Math.ceil(filteredData.length / itemsPerPage);
   const offset = currentPage * itemsPerPage;
-  const currentPageData = data.slice(offset, offset + itemsPerPage);
+  const currentPageData = filteredData.slice(offset, offset + itemsPerPage);
 
   const handlePageClick = ({ selected }) => {
     setCurrentPage(selected);
@@ -57,6 +75,27 @@ const Reports = () => {
   return (
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-4">Reports</h1>
+      <div className="flex justify-between mb-4">
+        <div>
+          <select
+            value={rowsPerPage}
+            onChange={handleRowsPerPageChange}
+            className="mr-2 p-2 border rounded"
+          >
+            <option value={10}>10</option>
+            <option value={30}>30</option>
+            <option value={50}>50</option>
+            <option value={100}>100</option>
+          </select>
+        </div>
+        <input
+          type="text"
+          placeholder="Search..."
+          value={search}
+          onChange={handleSearchChange}
+          className="p-2 border rounded"
+        />
+      </div>
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white border">
           <thead className="bg-gray-200">
@@ -86,18 +125,18 @@ const Reports = () => {
       </div>
       <div className="pagination-container mt-4 flex justify-end">
         <ReactPaginate
-          previousLabel={"Previous"}
-          nextLabel={"Next"}
+          previousLabel={'Previous'}
+          nextLabel={'Next'}
           pageCount={pageCount}
           onPageChange={handlePageClick}
-          containerClassName={"pagination flex list-none"}
-          activeClassName={"active"}
-          pageClassName={"page-item"}
-          pageLinkClassName={"page-link p-2 border rounded"}
-          previousClassName={"page-item"}
-          previousLinkClassName={"page-link p-2 border rounded"}
-          nextClassName={"page-item"}
-          nextLinkClassName={"page-link p-2 border rounded"}
+          containerClassName={'pagination flex list-none'}
+          activeClassName={'active'}
+          pageClassName={'page-item'}
+          pageLinkClassName={'page-link p-2 border rounded'}
+          previousClassName={'page-item'}
+          previousLinkClassName={'page-link p-2 border rounded'}
+          nextClassName={'page-item'}
+          nextLinkClassName={'page-link p-2 border rounded'}
         />
       </div>
     </div>
