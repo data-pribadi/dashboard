@@ -9,10 +9,10 @@ import 'chart.js';
 const Dashboard = () => {
   const [dataVouchers, setDataVouchers] = useState([]);
   const [dataLaporan, setDataLaporan] = useState([]);
-  const [loadingVouchers, setLoadingVouchers] = useState(true);
-  const [loadingLaporan, setLoadingLaporan] = useState(true);
-  const [errorVouchers, setErrorVouchers] = useState(null);
-  const [errorLaporan, setErrorLaporan] = useState(null);
+  // const [loadingVouchers, setLoadingVouchers] = useState(true);
+  // const [loadingLaporan, setLoadingLaporan] = useState(true);
+  // const [errorVouchers, setErrorVouchers] = useState(null);
+  // const [errorLaporan, setErrorLaporan] = useState(null);
 
   useEffect(() => {
     const fetchVouchers = async () => {
@@ -30,13 +30,12 @@ const Dashboard = () => {
         if (result.values) {
           setDataVouchers(result.values);
         } else {
-          setErrorVouchers('No data found in Data_Vouchers');
+          console.error('No data found in Data_Vouchers');
         }
       } catch (error) {
-        setErrorVouchers('Error fetching data from Data_Vouchers');
         console.error('Error fetching data from Data_Vouchers', error);
       } finally {
-        setLoadingVouchers(false);
+        // setLoadingVouchers(false);
       }
     };
 
@@ -55,13 +54,12 @@ const Dashboard = () => {
         if (result.values) {
           setDataLaporan(result.values);
         } else {
-          setErrorLaporan('No data found in Data_Laporan');
+          console.error('No data found in Data_Laporan');
         }
       } catch (error) {
-        setErrorLaporan('Error fetching data from Data_Laporan');
         console.error('Error fetching data from Data_Laporan', error);
       } finally {
-        setLoadingLaporan(false);
+        // setLoadingLaporan(false);
       }
     };
 
