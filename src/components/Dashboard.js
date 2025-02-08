@@ -95,7 +95,9 @@ const Dashboard = () => {
   }, {});
 
   const labels = Object.keys(penjualanPerUser);
-  const jumlahPenjualan = Object.values(penjualanPerUser).map((user) => user.penjualan);
+  const jumlahPenjualan = Object.values(penjualanPerUser).map((user) => 
+    user.penjualan
+  );
   const chartColors = ['#1E3A8A', '#10B981', '#F59E0B', '#EF4444'];
   const borderColors = ['#1E40AF', '#059669', '#D97706', '#DC2626'];
 
