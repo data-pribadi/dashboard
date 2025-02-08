@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import ReactPaginate from 'react-paginate';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import {
   faEdit,
   faEye,
   faShoppingCart,
   faTrashAlt,
 } from '@fortawesome/free-solid-svg-icons';
-import PurchaseModal from './PurchaseModal';
+import PurchaseModal from '../modals/PurchaseModal';
 import '../index.css'; // Pastikan Tailwind CSS terimpor
 
 const DataTable = () => {
