@@ -1,6 +1,6 @@
-import React, { useEffect, useRef } from "react";
-import { Bar } from "react-chartjs-2";
-import "../../index.css";
+import React, { useEffect, useRef } from 'react';
+import { Bar } from 'react-chartjs-2';
+import '../../index.css';
 
 const Chart = ({ data, options }) => {
   const chartRef = useRef(null);
