@@ -1,31 +1,29 @@
-import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
-import "../../index.css";
+import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faDollarSign, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
+import '../../index.css';
 
-const RecentSales = ({ recentSale }) => {
+const RecentSales = ({ sales }) => {
   return (
-    <div className="bg-white p-4 rounded-lg shadow-lg mb-8">
-      <h2 className="text-xl font-semibold mb-4">Recent Sales</h2>
-      {recentSale ? (
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7 gap-4 bg-gray-100 p-4 rounded-lg shadow">
-          <span>{recentSale[0]}</span>
-          <span>{recentSale[1]}</span>
-          <span>{recentSale[2]}</span>
-          <span>{recentSale[3]}</span>
-          <span>{recentSale[4]}</span>
-          <span>{recentSale[5]}</span>
-          <span>
-            <FontAwesomeIcon
-              icon={faCheckCircle}
-              className="text-green-500 mr-2"
-            />
-            {recentSale[7]}
-          </span>
-        </div>
-      ) : (
-        <p className="text-center py-4">No recent sales data available</p>
-      )}
+    <div className="p-4 bg-white rounded-lg shadow-md">
+      <h2 className="text-xl font-bold mb-4">Recent Sales</h2>
+      <ul className="divide-y divide-gray-200">
+        {sales.map((sale, index) => (
+          <li key={index} className="py-2 flex justify-between items-center">
+            <div>
+              <p className="text-gray-900">{sale.productName}</p>
+              <p className="text-sm text-gray-600">
+                <FontAwesomeIcon icon={faCalendarAlt} className="mr-1" />
+                {sale.date}
+              </p>
+            </div>
+            <div className="text-green-500 font-bold">
+              <FontAwesomeIcon icon={faDollarSign} className="mr-1" />
+              {sale.amount}
+            </div>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
