@@ -1,22 +1,25 @@
-import React, { useEffect, useRef } from 'react';
-import { Bar } from 'react-chartjs-2';
-import '../../index.css';
+import React, { useRef, useEffect } from 'react';
+import { Chart as ChartJS } from 'chart.js/auto';
 
 const Chart = ({ data, options }) => {
   const chartRef = useRef(null);
 
   useEffect(() => {
+    const myChartRef = chartRef.current;
+
+    const myChart = new ChartJS(myChartRef, {
+      type: 'bar',
+      data,
+      options,
+    });
+
     return () => {
-      if (chartRef.current) {
-        chartRef.current.destroy();
-      }
+      myChart.destroy();
     };
-  }, []);
+  }, [data, options]);
 
   return (
-    <div className="bg-white p-4 rounded-lg shadow-lg">
-      <Bar ref={chartRef} data={data} options={options} />
-    </div>
+    <canvas ref={chartRef} />
   );
 };
 
