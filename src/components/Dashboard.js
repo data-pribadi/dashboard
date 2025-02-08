@@ -1,200 +1,160 @@
-import React, { useState, useEffect, useCallback } from "react";
-import "../index.css"; // Mengimpor index.css dari direktori src
-import "animate.css"; // Mengimpor animate.css
-import DashboardCard from "./Dashboard/DashboardCard";
-import Chart from "./Dashboard/Chart";
-import RecentSales from "./Dashboard/RecentSales";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-} from "chart.js";
-
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend
-);
+import React, { useState, useEffect } from 'react';
+import '../index.css';
+import 'animate.css';
+import DashboardCard from './Dashboard/DashboardCard';
+import Chart from './Dashboard/Chart';
+import RecentSales from './Dashboard/RecentSales';
+import 'chart.js';
 
 const Dashboard = () => {
-  const [vouchersData, setVouchersData] = useState([]);
-  const [laporanData, setLaporanData] = useState([]);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  const fetchVouchersData = useCallback(async () => {
-    const sheetId = process.env.REACT_APP_SHEET_ID;
-    const range = process.env.REACT_APP_VOUCHERS_RANGE;
-    const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
-    const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}?key=${apiKey}`;
-
-    try {
-      const response = await fetch(url);
-      const result = await response.json();
-      if (result.values) {
-        setVouchersData(result.values);
-      } else {
-        setVouchersData([]);
-        setError("No data found in Data_Vouchers");
-      }
-    } catch (error) {
-      setError("Error fetching data from Data_Vouchers");
-    }
-  }, []);
-
-  const fetchLaporanData = useCallback(async () => {
-    const sheetId = process.env.REACT_APP_SHEET_ID;
-    const range = process.env.REACT_APP_LAPORAN_RANGE;
-    const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
-    const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}?key=${apiKey}`;
-
-    try {
-      const response = await fetch(url);
-      const result = await response.json();
-      if (result.values) {
-        setLaporanData(result.values);
-      } else {
-        setLaporanData([]);
-        setError("No data found in Data_Laporan");
-      }
-    } catch (error) {
-      setError("Error fetching data from Data_Laporan");
-    }
-  }, []);
-
-  const fetchData = useCallback(async () => {
-    setError(null);
-    setLoading(true);
-    await fetchVouchersData();
-    await fetchLaporanData();
-    setLoading(false);
-  }, [fetchVouchersData, fetchLaporanData]);
+  const [dataVouchers, setDataVouchers] = useState([]);
+  const [dataLaporan, setDataLaporan] = useState([]);
+  const [loadingVouchers, setLoadingVouchers] = useState(true);
+  const [loadingLaporan, setLoadingLaporan] = useState(true);
+  const [errorVouchers, setErrorVouchers] = useState(null);
+  const [errorLaporan, setErrorLaporan] = useState(null);
 
   useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+    const fetchVouchers = async () => {
+      const sheetId = process.env.REACT_APP_SHEET_ID;
+      const range = process.env.REACT_APP_VOUCHERS_RANGE;
+      const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
+      const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}?key=${apiKey}`;
 
-  const totalSellers = vouchersData.length;
-  const activeUsers = vouchersData.filter((row) => row[6] === "Aktif").length;
-  const totalSales = laporanData
-    .reduce(
-      (sum, row) =>
-        sum +
-        parseFloat(row[3]?.replace("Rp", "").replace(",", "").trim() || 0),
-      0
-    )
-    .toLocaleString("id-ID", { style: "currency", currency: "IDR" });
-  const statusCount = laporanData.length;
+      console.log('Fetching data from URL:', url);
+
+      try {
+        const response = await fetch(url);
+        const result = await response.json();
+        console.log('Google Sheets API response:', result);
+        if (result.values) {
+          setDataVouchers(result.values);
+        } else {
+          setErrorVouchers('No data found in Data_Vouchers');
+        }
+      } catch (error) {
+        setErrorVouchers('Error fetching data from Data_Vouchers');
+        console.error('Error fetching data from Data_Vouchers', error);
+      } finally {
+        setLoadingVouchers(false);
+      }
+    };
+
+    const fetchLaporan = async () => {
+      const sheetId = process.env.REACT_APP_SHEET_ID;
+      const range = process.env.REACT_APP_LAPORAN_RANGE;
+      const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
+      const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}?key=${apiKey}`;
+
+      console.log('Fetching data from URL:', url);
+
+      try {
+        const response = await fetch(url);
+        const result = await response.json();
+        console.log('Google Sheets API response:', result);
+        if (result.values) {
+          setDataLaporan(result.values);
+        } else {
+          setErrorLaporan('No data found in Data_Laporan');
+        }
+      } catch (error) {
+        setErrorLaporan('Error fetching data from Data_Laporan');
+        console.error('Error fetching data from Data_Laporan', error);
+      } finally {
+        setLoadingLaporan(false);
+      }
+    };
+
+    fetchVouchers();
+    fetchLaporan();
+  }, []);
+
+  const totalVouchers = dataVouchers.filter((row) => row[7] === 'Aktif').length;
+  const totalAmount = dataVouchers
+    .filter((row) => row[7] === 'Aktif')
+    .reduce((total, row) => {
+      return total + parseFloat(row[3].replace('Rp', '').replace(',', ''));
+    }, 0);
+
+  const currencyFormat = (value) =>
+    new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(value);
+
+  const penjualanPerUser = dataLaporan.reduce((acc, row) => {
+    const penjual = row[1];
+    const harga = parseFloat(row[3].replace('Rp', '').replace(',', ''));
+    if (!acc[penjual]) {
+      acc[penjual] = { userAktif: 0, status: '', penjualan: 0 };
+    }
+    acc[penjual].userAktif++;
+    acc[penjual].penjualan += harga;
+    acc[penjual].status = row[6];
+    return acc;
+  }, {});
+
+  const labels = Object.keys(penjualanPerUser);
+  const jumlahPenjualan = Object.values(penjualanPerUser).map((user) => user.penjualan);
+  const chartColors = ['#1E3A8A', '#10B981', '#F59E0B', '#EF4444'];
+  const borderColors = ['#1E40AF', '#059669', '#D97706', '#DC2626'];
 
   const data = {
-    labels: ["Penjual", "User Aktif", "Status", "Penjualan"],
+    labels,
     datasets: [
       {
-        label: "Jumlah",
-        data: [
-          totalSellers,
-          activeUsers,
-          statusCount,
-          parseFloat(totalSales.replace("Rp", "").replace(",", "").trim() || 0),
-        ],
-        backgroundColor: ["#1E3A8A", "#10B981", "#F59E0B", "#EF4444"],
-        borderColor: ["#1E40AF", "#059669", "#D97706", "#DC2626"],
+        label: 'Jumlah Penjualan',
+        data: jumlahPenjualan,
+        backgroundColor: chartColors,
+        borderColor: borderColors,
         borderWidth: 1,
       },
     ],
   };
 
-  const options = {
-    responsive: true,
-    plugins: {
-      legend: {
-        display: true,
-      },
-      title: {
-        display: true,
-        text: "Dashboard Data Chart",
+  const chartOptions = {
+    scales: {
+      y: {
+        beginAtZero: true,
       },
     },
   };
 
-  const data2 = {
-    labels: ["Januari", "Februari", "Maret", "April"],
+  const monthlySalesLabels = ['Januari', 'Februari', 'Maret', 'April'];
+  const monthlySalesData = [0, 0, 0, 0];
+  const monthlySalesColors = ['#3B82F6', '#10B981', '#F59E0B', '#EF4444'];
+  const monthlyBorderColors = ['#2563EB', '#059669', '#D97706', '#DC2626'];
+
+  const monthlySalesChartData = {
+    labels: monthlySalesLabels,
     datasets: [
       {
-        label: "Penjualan Bulanan",
-        data: [3000, 4000, 3500, 5000],
-        backgroundColor: ["#3B82F6", "#10B981", "#F59E0B", "#EF4444"],
-        borderColor: ["#2563EB", "#059669", "#D97706", "#DC2626"],
+        label: 'Penjualan Bulanan',
+        data: monthlySalesData,
+        backgroundColor: monthlySalesColors,
+        borderColor: monthlyBorderColors,
         borderWidth: 1,
       },
     ],
   };
-
-  const options2 = {
-    responsive: true,
-    plugins: {
-      legend: {
-        display: true,
-      },
-      title: {
-        display: true,
-        text: "Penjualan Bulanan Chart",
-      },
-    },
-  };
-
-  const recentSale = laporanData.length ? laporanData.slice(-1)[0] : null;
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
-      {error && <div className="text-center text-red-600 py-4">{error}</div>}
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
-        <DashboardCard
-          bgColor="bg-blue-500"
-          title="Total Sellers Stock"
-          value={totalSellers}
-        />
-        <DashboardCard
-          bgColor="bg-green-500"
-          title="User Aktif"
-          value={activeUsers}
-        />
-        <DashboardCard
-          bgColor="bg-yellow-500"
-          title="Status"
-          value={statusCount}
-        />
-        <DashboardCard
-          bgColor="bg-red-500"
-          title="Hasil Penjualan"
-          value={totalSales}
-        />
-        <DashboardCard
-          bgColor="bg-gray-500"
-          title="Sisa Stock"
-          value={totalSellers}
-        />
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <DashboardCard title="Total Vouchers" value={totalVouchers} icon="📦" bgColor="bg-blue-500" />
+        <DashboardCard title="Total Amount" value={currencyFormat(totalAmount)} icon="💰" bgColor="bg-green-500" />
+        <DashboardCard title="Aktif Vouchers" value="Aktif" icon="✅" bgColor="bg-yellow-500" />
+        <DashboardCard title="Penjualan Bulanan" value="Rp 0" icon="📊" bgColor="bg-red-500" />
       </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <Chart data={data} options={options} />
-        <Chart data={data2} options={options2} />
+      <div className="mt-8">
+        <h2 className="text-xl font-bold mb-4">Dashboard Data Chart</h2>
+        <Chart data={data} options={chartOptions} />
       </div>
-
-      <RecentSales recentSale={recentSale} />
+      <div className="mt-8">
+        <h2 className="text-xl font-bold mb-4">Penjualan Bulanan Chart</h2>
+        <Chart data={monthlySalesChartData} options={chartOptions} />
+      </div>
+      <div className="mt-8">
+        <RecentSales sales={dataLaporan} />
+      </div>
     </div>
   );
 };
