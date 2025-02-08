@@ -45,7 +45,8 @@
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
-    "start-server": "node src/api/login.js"
+    "start-server": "node src/api/login.js",
+    "start-all": "concurrently \"npm run start-server\" \"npm start\""
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.18.6",
