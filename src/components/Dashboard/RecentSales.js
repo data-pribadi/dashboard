@@ -1,7 +1,7 @@
-import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
-import "../../index.css";
+import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+import '../../index.css';
 
 const RecentSales = ({ recentSale }) => {
   return (
@@ -16,10 +16,7 @@ const RecentSales = ({ recentSale }) => {
           <span>{recentSale[4]}</span>
           <span>{recentSale[5]}</span>
           <span>
-            <FontAwesomeIcon
-              icon={faCheckCircle}
-              className="text-green-500 mr-2"
-            />
+            <FontAwesomeIcon icon={faCheckCircle} className="text-green-500 mr-2" />
             {recentSale[7]}
           </span>
         </div>
