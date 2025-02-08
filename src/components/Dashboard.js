@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import '../index.css';
-import 'animate.css';
-import DashboardCard from './DashboardCard';
-import Chart from './Chart';
-import RecentSales from './RecentSales';
+import '../index.css'; // Mengimpor index.css dari direktori src
+import 'animate.css'; // Mengimpor animate.css
+import DashboardCard from './Dashboard/DashboardCard';
+import Chart from './Dashboard/Chart';
+import RecentSales from './Dashboard/RecentSales';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -27,7 +26,7 @@ const Dashboard = () => {
   const [vouchersData, setVouchersData] = useState([]);
   const [laporanData, setLaporanData] = useState([]);
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true); // Tambahkan definisi untuk loading
+  const [loading, setLoading] = useState(true);
 
   const fetchVouchersData = useCallback(async () => {
     const sheetId = process.env.REACT_APP_SHEET_ID;
@@ -41,7 +40,7 @@ const Dashboard = () => {
       if (result.values) {
         setVouchersData(result.values);
       } else {
-        setVouchersData([]); // Set data kosong jika tidak ditemukan
+        setVouchersData([]);
         setError('No data found in Data_Vouchers');
       }
     } catch (error) {
@@ -71,10 +70,10 @@ const Dashboard = () => {
 
   const fetchData = useCallback(async () => {
     setError(null);
-    setLoading(true); // Set loading menjadi true saat memulai fetch data
+    setLoading(true);
     await fetchVouchersData();
     await fetchLaporanData();
-    setLoading(false); // Set loading menjadi false setelah fetch data selesai
+    setLoading(false);
   }, [fetchVouchersData, fetchLaporanData]);
 
   useEffect(() => {
@@ -149,10 +148,8 @@ const Dashboard = () => {
     },
   };
 
-  // Ambil satu item terbaru dari pembelian item terbaru
   const recentSale = laporanData.length ? laporanData.slice(-1)[0] : null;
 
-  // Tampilkan loading saat data sedang di-fetch
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -162,7 +159,6 @@ const Dashboard = () => {
       <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
       {error && <div className="text-center text-red-600 py-4">{error}</div>}
 
-      {/* Card */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
         <DashboardCard bgColor="bg-blue-500" title="Total Sellers Stock" value={totalSellers} />
         <DashboardCard bgColor="bg-green-500" title="User Aktif" value={activeUsers} />
@@ -171,13 +167,11 @@ const Dashboard = () => {
         <DashboardCard bgColor="bg-gray-500" title="Sisa Stock" value={totalSellers} />
       </div>
 
-      {/* Chart */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <Chart data={data} options={options} />
         <Chart data={data2} options={options2} />
       </div>
 
-      {/* Recent Sales */}
       <RecentSales recentSale={recentSale} />
     </div>
   );
