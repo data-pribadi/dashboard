@@ -1,11 +1,15 @@
-import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
-import 'animate.css';
+import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheckCircle } from "@fortawesome/free-solid-svg-icons";
+import "animate.css";
 
 const SuccessModal = ({ isOpen, onClose }) => {
   return (
-    <div className={`${isOpen ? 'block' : 'hidden'} fixed z-10 inset-0 overflow-y-auto`}>
+    <div
+      className={`${
+        isOpen ? "block" : "hidden"
+      } fixed z-10 inset-0 overflow-y-auto`}
+    >
       <div className="flex items-center justify-center min-h-screen px-4 text-center sm:block sm:p-0">
         <div className="fixed inset-0 transition-opacity" aria-hidden="true">
           <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
@@ -24,7 +28,11 @@ const SuccessModal = ({ isOpen, onClose }) => {
                   Success
                 </h3>
                 <div className="mt-8 flex flex-col items-center animate__animated animate__heartBeat">
-                  <FontAwesomeIcon icon={faCheckCircle} className="text-green-500" size="6x" />
+                  <FontAwesomeIcon
+                    icon={faCheckCircle}
+                    className="text-green-500"
+                    size="6x"
+                  />
                 </div>
                 <p className="text-sm text-gray-500 mt-8">
                   Berhasil diperbarui.

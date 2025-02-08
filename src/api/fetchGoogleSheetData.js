@@ -1,14 +1,14 @@
-import { google } from 'googleapis';
-import dotenv from 'dotenv';
+import { google } from "googleapis";
+import dotenv from "dotenv";
 
 dotenv.config(); // Memuat variabel lingkungan dari file .env
 
-const sheets = google.sheets('v4');
+const sheets = google.sheets("v4");
 
 export const fetchGoogleSheetData = async (range) => {
   const auth = new google.auth.GoogleAuth({
-    keyFile: './credentials.json', // Path ke file JSON kredensial Anda
-    scopes: ['https://www.googleapis.com/auth/spreadsheets.readonly'],
+    keyFile: "./credentials.json", // Path ke file JSON kredensial Anda
+    scopes: ["https://www.googleapis.com/auth/spreadsheets.readonly"],
   });
 
   try {
@@ -20,10 +20,10 @@ export const fetchGoogleSheetData = async (range) => {
     };
 
     const response = await sheets.spreadsheets.values.get(request);
-    console.log('Data fetched from Google Sheets:', response.data.values);
+    console.log("Data fetched from Google Sheets:", response.data.values);
     return response.data.values;
   } catch (err) {
-    console.error('Error fetching data from Google Sheets:', err);
+    console.error("Error fetching data from Google Sheets:", err);
     return [];
   }
 };

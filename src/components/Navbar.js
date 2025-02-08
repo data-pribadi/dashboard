@@ -1,6 +1,6 @@
-import React, { useContext } from 'react';
-import '../index.css'; // Pastikan Tailwind CSS terimpor
-import { AuthContext } from '../context/AuthContext'; // Impor AuthContext
+import React, { useContext } from "react";
+import "../index.css"; // Pastikan Tailwind CSS terimpor
+import { AuthContext } from "../context/AuthContext"; // Impor AuthContext
 
 const Navbar = () => {
   const { logout } = useContext(AuthContext); // Gunakan logout dari AuthContext

@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import '../index.css'; // Mengimpor index.css dari direktori src
-import 'animate.css'; // Mengimpor animate.css
-import DashboardCard from './Dashboard/DashboardCard';
-import Chart from './Dashboard/Chart';
-import RecentSales from './Dashboard/RecentSales';
+import React, { useState, useEffect, useCallback } from "react";
+import "../index.css"; // Mengimpor index.css dari direktori src
+import "animate.css"; // Mengimpor animate.css
+import DashboardCard from "./Dashboard/DashboardCard";
+import Chart from "./Dashboard/Chart";
+import RecentSales from "./Dashboard/RecentSales";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -12,7 +12,7 @@ import {
   Title,
   Tooltip,
   Legend,
-} from 'chart.js';
+} from "chart.js";
 
 ChartJS.register(
   CategoryScale,
@@ -42,10 +42,10 @@ const Dashboard = () => {
         setVouchersData(result.values);
       } else {
         setVouchersData([]);
-        setError('No data found in Data_Vouchers');
+        setError("No data found in Data_Vouchers");
       }
     } catch (error) {
-      setError('Error fetching data from Data_Vouchers');
+      setError("Error fetching data from Data_Vouchers");
     }
   }, []);
 
@@ -62,10 +62,10 @@ const Dashboard = () => {
         setLaporanData(result.values);
       } else {
         setLaporanData([]);
-        setError('No data found in Data_Laporan');
+        setError("No data found in Data_Laporan");
       }
     } catch (error) {
-      setError('Error fetching data from Data_Laporan');
+      setError("Error fetching data from Data_Laporan");
     }
   }, []);
 
@@ -82,29 +82,30 @@ const Dashboard = () => {
   }, [fetchData]);
 
   const totalSellers = vouchersData.length;
-  const activeUsers = vouchersData.filter((row) => row[6] === 'Aktif').length;
+  const activeUsers = vouchersData.filter((row) => row[6] === "Aktif").length;
   const totalSales = laporanData
     .reduce(
       (sum, row) =>
-        sum + parseFloat(row[3]?.replace('Rp', '').replace(',', '').trim() || 0),
+        sum +
+        parseFloat(row[3]?.replace("Rp", "").replace(",", "").trim() || 0),
       0
     )
-    .toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
+    .toLocaleString("id-ID", { style: "currency", currency: "IDR" });
   const statusCount = laporanData.length;
 
   const data = {
-    labels: ['Penjual', 'User Aktif', 'Status', 'Penjualan'],
+    labels: ["Penjual", "User Aktif", "Status", "Penjualan"],
     datasets: [
       {
-        label: 'Jumlah',
+        label: "Jumlah",
         data: [
           totalSellers,
           activeUsers,
           statusCount,
-          parseFloat(totalSales.replace('Rp', '').replace(',', '').trim() || 0),
+          parseFloat(totalSales.replace("Rp", "").replace(",", "").trim() || 0),
         ],
-        backgroundColor: ['#1E3A8A', '#10B981', '#F59E0B', '#EF4444'],
-        borderColor: ['#1E40AF', '#059669', '#D97706', '#DC2626'],
+        backgroundColor: ["#1E3A8A", "#10B981", "#F59E0B", "#EF4444"],
+        borderColor: ["#1E40AF", "#059669", "#D97706", "#DC2626"],
         borderWidth: 1,
       },
     ],
@@ -118,19 +119,19 @@ const Dashboard = () => {
       },
       title: {
         display: true,
-        text: 'Dashboard Data Chart',
+        text: "Dashboard Data Chart",
       },
     },
   };
 
   const data2 = {
-    labels: ['Januari', 'Februari', 'Maret', 'April'],
+    labels: ["Januari", "Februari", "Maret", "April"],
     datasets: [
       {
-        label: 'Penjualan Bulanan',
+        label: "Penjualan Bulanan",
         data: [3000, 4000, 3500, 5000],
-        backgroundColor: ['#3B82F6', '#10B981', '#F59E0B', '#EF4444'],
-        borderColor: ['#2563EB', '#059669', '#D97706', '#DC2626'],
+        backgroundColor: ["#3B82F6", "#10B981", "#F59E0B", "#EF4444"],
+        borderColor: ["#2563EB", "#059669", "#D97706", "#DC2626"],
         borderWidth: 1,
       },
     ],
@@ -144,7 +145,7 @@ const Dashboard = () => {
       },
       title: {
         display: true,
-        text: 'Penjualan Bulanan Chart',
+        text: "Penjualan Bulanan Chart",
       },
     },
   };
@@ -171,7 +172,11 @@ const Dashboard = () => {
           title="User Aktif"
           value={activeUsers}
         />
-        <DashboardCard bgColor="bg-yellow-500" title="Status" value={statusCount} />
+        <DashboardCard
+          bgColor="bg-yellow-500"
+          title="Status"
+          value={statusCount}
+        />
         <DashboardCard
           bgColor="bg-red-500"
           title="Hasil Penjualan"

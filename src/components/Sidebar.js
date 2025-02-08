@@ -1,8 +1,13 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTachometerAlt, faTable, faChartBar, faPlus } from '@fortawesome/free-solid-svg-icons';
-import '../index.css'; // Pastikan Tailwind CSS terimpor
+import React from "react";
+import { NavLink } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faTachometerAlt,
+  faTable,
+  faChartBar,
+  faPlus,
+} from "@fortawesome/free-solid-svg-icons";
+import "../index.css"; // Pastikan Tailwind CSS terimpor
 
 const Sidebar = () => {
   return (
@@ -13,8 +18,8 @@ const Sidebar = () => {
             to="/dashboard"
             className={({ isActive }) =>
               isActive
-                ? 'flex items-center p-2 rounded bg-gray-700'
-                : 'flex items-center p-2 rounded hover:bg-gray-700'
+                ? "flex items-center p-2 rounded bg-gray-700"
+                : "flex items-center p-2 rounded hover:bg-gray-700"
             }
           >
             <FontAwesomeIcon icon={faTachometerAlt} className="mr-2" />
@@ -26,8 +31,8 @@ const Sidebar = () => {
             to="/datatable"
             className={({ isActive }) =>
               isActive
-                ? 'flex items-center p-2 rounded bg-gray-700'
-                : 'flex items-center p-2 rounded hover:bg-gray-700'
+                ? "flex items-center p-2 rounded bg-gray-700"
+                : "flex items-center p-2 rounded hover:bg-gray-700"
             }
           >
             <FontAwesomeIcon icon={faTable} className="mr-2" />
@@ -39,8 +44,8 @@ const Sidebar = () => {
             to="/reports"
             className={({ isActive }) =>
               isActive
-                ? 'flex items-center p-2 rounded bg-gray-700'
-                : 'flex items-center p-2 rounded hover:bg-gray-700'
+                ? "flex items-center p-2 rounded bg-gray-700"
+                : "flex items-center p-2 rounded hover:bg-gray-700"
             }
           >
             <FontAwesomeIcon icon={faChartBar} className="mr-2" />
@@ -52,8 +57,8 @@ const Sidebar = () => {
             to="/newpage"
             className={({ isActive }) =>
               isActive
-                ? 'flex items-center p-2 rounded bg-gray-700'
-                : 'flex items-center p-2 rounded hover:bg-gray-700'
+                ? "flex items-center p-2 rounded bg-gray-700"
+                : "flex items-center p-2 rounded hover:bg-gray-700"
             }
           >
             <FontAwesomeIcon icon={faPlus} className="mr-2" />
