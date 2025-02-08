@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import '../../index.css';
+import '../index.css';
 import 'animate.css';
 import DashboardCard from './DashboardCard';
 import Chart from './Chart';
