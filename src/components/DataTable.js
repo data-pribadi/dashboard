@@ -1,19 +1,14 @@
-import React, { useState, useEffect } from "react";
-import ReactPaginate from "react-paginate";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faEdit,
-  faEye,
-  faShoppingCart,
-  faTrashAlt,
-} from "@fortawesome/free-solid-svg-icons";
-import "../index.css"; // Pastikan Tailwind CSS terimpor
+import React, { useState, useEffect } from 'react';
+import ReactPaginate from 'react-paginate';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit, faEye, faShoppingCart, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import '../index.css'; // Pastikan Tailwind CSS terimpor
 
 const DataTable = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = rowsPerPage;
@@ -25,20 +20,20 @@ const DataTable = () => {
       const apiKey = process.env.REACT_APP_GOOGLE_API_KEY;
       const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}?key=${apiKey}`;
 
-      console.log("Fetching data from URL:", url); // Log URL untuk verifikasi
+      console.log('Fetching data from URL:', url); // Log URL untuk verifikasi
 
       try {
         const response = await fetch(url);
         const result = await response.json();
-        console.log("Google Sheets API response:", result); // Log respon untuk debug
+        console.log('Google Sheets API response:', result); // Log respon untuk debug
         if (result.values) {
           setData(result.values);
         } else {
-          setError("No data found");
+          setError('No data found');
         }
       } catch (error) {
-        setError("Error fetching data from Google Sheets");
-        console.error("Error fetching data from Google Sheets", error);
+        setError('Error fetching data from Google Sheets');
+        console.error('Error fetching data from Google Sheets', error);
       } finally {
         setLoading(false);
       }
@@ -115,7 +110,7 @@ const DataTable = () => {
               <th className="py-2 px-4 border">WAKTU</th>
               <th className="py-2 px-4 border">USER_AKTIF</th>
               <th className="py-2 px-4 border">STATUS</th>
-              <th className="py-2 px-4 border">ACTIONS</th>{" "}
+              <th className="py-2 px-4 border">ACTIONS</th>{' '}
               {/* Tambahkan kolom untuk actions */}
             </tr>
           </thead>
@@ -150,18 +145,18 @@ const DataTable = () => {
       </div>
       <div className="pagination-container mt-4 flex justify-end">
         <ReactPaginate
-          previousLabel={"Previous"}
-          nextLabel={"Next"}
+          previousLabel={'Previous'}
+          nextLabel={'Next'}
           pageCount={pageCount}
           onPageChange={handlePageClick}
-          containerClassName={"pagination flex list-none"}
-          activeClassName={"active"}
-          pageClassName={"page-item"}
-          pageLinkClassName={"page-link p-2 border rounded"}
-          previousClassName={"page-item"}
-          previousLinkClassName={"page-link p-2 border rounded"}
-          nextClassName={"page-item"}
-          nextLinkClassName={"page-link p-2 border rounded"}
+          containerClassName={'pagination flex list-none'}
+          activeClassName={'active'}
+          pageClassName={'page-item'}
+          pageLinkClassName={'page-link p-2 border rounded'}
+          previousClassName={'page-item'}
+          previousLinkClassName={'page-link p-2 border rounded'}
+          nextClassName={'page-item'}
+          nextLinkClassName={'page-link p-2 border rounded'}
         />
       </div>
     </div>
