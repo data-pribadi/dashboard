@@ -1,21 +1,21 @@
-require('dotenv').config();
-const express = require('express');
-const { google } = require('googleapis');
-const credentials = require('../../credentials.json');
-const moment = require('moment-timezone');
+require("dotenv").config();
+const express = require("express");
+const { google } = require("googleapis");
+const credentials = require("../../credentials.json");
+const moment = require("moment-timezone");
 
 const router = express.Router();
 
-const SCOPES = ['https://www.googleapis.com/auth/spreadsheets'];
+const SCOPES = ["https://www.googleapis.com/auth/spreadsheets"];
 const auth = new google.auth.GoogleAuth({
   credentials,
   scopes: SCOPES,
 });
 
-const sheets = google.sheets({ version: 'v4', auth });
+const sheets = google.sheets({ version: "v4", auth });
 
-const voucherSheetName = process.env.REACT_APP_VOUCHERS_RANGE.split('!')[0];
-const laporanSheetName = process.env.REACT_APP_LAPORAN_RANGE.split('!')[0];
+const voucherSheetName = process.env.REACT_APP_VOUCHERS_RANGE.split("!")[0];
+const laporanSheetName = process.env.REACT_APP_LAPORAN_RANGE.split("!")[0];
 
 // Fungsi untuk mendapatkan baris terakhir
 async function getLastRow(spreadsheetId, sheetName) {
@@ -27,7 +27,7 @@ async function getLastRow(spreadsheetId, sheetName) {
 }
 
 // Endpoint untuk memperbarui Google Sheet
-router.post('/update-sheet', async (req, res) => {
+router.post("/update-sheet", async (req, res) => {
   const { item } = req.body;
   const spreadsheetId = process.env.REACT_APP_SHEET_ID;
   const rangeUserAktif = `${voucherSheetName}!G${item.rowIndex}`;
@@ -35,33 +35,33 @@ router.post('/update-sheet', async (req, res) => {
   const rangeTanggal = `${voucherSheetName}!E${item.rowIndex}`;
   const rangeWaktu = `${voucherSheetName}!F${item.rowIndex}`;
 
-  const currentDate = moment().tz('Asia/Jakarta').format('DD/MM/YYYY');
-  const currentTime = moment().tz('Asia/Jakarta').format('HH:mm:ss');
+  const currentDate = moment().tz("Asia/Jakarta").format("DD/MM/YYYY");
+  const currentTime = moment().tz("Asia/Jakarta").format("HH:mm:ss");
 
   try {
     // Perbarui data di Data_Vouchers
     await sheets.spreadsheets.values.update({
       spreadsheetId,
       range: rangeUserAktif,
-      valueInputOption: 'USER_ENTERED',
+      valueInputOption: "USER_ENTERED",
       resource: {
-        values: [['Aktif']],
+        values: [["Aktif"]],
       },
     });
 
     await sheets.spreadsheets.values.update({
       spreadsheetId,
       range: rangeStatus,
-      valueInputOption: 'USER_ENTERED',
+      valueInputOption: "USER_ENTERED",
       resource: {
-        values: [['Sukses']],
+        values: [["Sukses"]],
       },
     });
 
     await sheets.spreadsheets.values.update({
       spreadsheetId,
       range: rangeTanggal,
-      valueInputOption: 'USER_ENTERED',
+      valueInputOption: "USER_ENTERED",
       resource: {
         values: [[currentDate]],
       },
@@ -70,7 +70,7 @@ router.post('/update-sheet', async (req, res) => {
     await sheets.spreadsheets.values.update({
       spreadsheetId,
       range: rangeWaktu,
-      valueInputOption: 'USER_ENTERED',
+      valueInputOption: "USER_ENTERED",
       resource: {
         values: [[currentTime]],
       },
@@ -87,15 +87,15 @@ router.post('/update-sheet', async (req, res) => {
         item.harga,
         currentDate,
         currentTime,
-        'Aktif',
-        'Sukses',
+        "Aktif",
+        "Sukses",
       ],
     ];
 
     await sheets.spreadsheets.values.update({
       spreadsheetId,
       range: laporanRange,
-      valueInputOption: 'USER_ENTERED',
+      valueInputOption: "USER_ENTERED",
       resource: {
         values: laporanData,
       },
@@ -103,10 +103,10 @@ router.post('/update-sheet', async (req, res) => {
 
     res.json({ success: true });
   } catch (error) {
-    console.error('Error updating sheet:', error);
+    console.error("Error updating sheet:", error);
     res.status(500).json({
       success: false,
-      error: 'An error occurred while updating the sheet',
+      error: "An error occurred while updating the sheet",
     });
   }
 });
