@@ -32,10 +32,11 @@ const Register = () => {
       return;
     }
     try {
-      const response = await axios.post(
-        'http://localhost:5000/api/register',
-        { username, fullname, password }
-      );
+      const response = await axios.post('http://localhost:5000/api/register', {
+        username,
+        fullname,
+        password,
+      });
       if (response.data.success) {
         alert('Registrasi berhasil. Silakan login.');
         navigate('/login');
